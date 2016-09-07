@@ -1,0 +1,38 @@
+h1 {
+	color:white;
+	padding-top: 15px;
+}
+
+body {
+	background-color: black
+}
+
+img {
+	width: 600px;
+}
+
+.welcome {
+	text-align: center;
+}
+
+.nav {
+	text-align: center;
+}
+
+a {
+	color: tan;
+	font-size: 3rem;
+	margin: 10px;
+}
+
+a:hover {
+	color: brown;
+}
+
+p {
+	color: tan;
+}
+
+label {
+	color: tan;
+}

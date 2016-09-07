@@ -1,0 +1,10 @@
+- const composedTitle = `${company} ${page ? `| ${page}` : ''}`
+
+title= composedTitle
+include stylesheet.pug
+
+//- if page
+//- 	title #{company} | #{page}
+//- else
+//- 	title #{company}
+//- include stylesheet.pug
