@@ -1,12 +1,20 @@
 'use strict';
 
-const {MongoClient: {connect}} = require('mongodb')
+const mongoose = require('mongoose')
 
 const MONGODB_URL = 'mongodb://localhost:27017/oreopizza'
 
-let db
+mongoose.Promise = Promise // use the native Node Promise library
 
-module.exports.connect = () => connect(MONGODB_URL).then (_db => db = _db)
-module.exports.db = () => db
+mongoose.model('Contact', {
+  name: String,
+  email: String,
+  phone: String,
+  message: String
+})
+
+
+module.exports.connect = () => mongoose.connect(MONGODB_URL)
+
 
 //the return of the connect promise is _db, then store it to db
