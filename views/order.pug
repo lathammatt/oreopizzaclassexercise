@@ -18,10 +18,8 @@ block content
         label(for='size') Size
         select.form-control#size(name='size')
           option
-          option(value='small') Small 10"
-          option(value='medium') Medium 12"
-          option(value='large') Large 14"
-          option(value='megadoublestuffed') MegaDoubleStuffed 18"
+          each size in sizes
+            option(value-size.inches) #{size.name}: #{size.inches}"
       .order-form__submit
         a.btn.btn-danger.btn-lg(href='/') Cancel
         input.btn.btn-success.btn-lg(type='submit' value='Submit')
