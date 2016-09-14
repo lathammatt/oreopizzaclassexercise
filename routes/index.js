@@ -17,20 +17,20 @@ router.get("/about", (req, res) => {
 router.get("/contact", (req, res) => {
 	res.render('contact', {page: 'Contact'})
 })
-router.post("/contact", (req, res) => {
-	const msg = new Contact(req.body)
-	msg.save()
+router.post("/contact", (req, res, err) => {
+	Contact
+		.create(req.body)
 		.then(() => res.redirect('/'))
-		.catch(() => res.send('bad'))
+		.catch(err)
 })
 router.get('/order', (req, res) => {
 	res.render('order', {page:'Order'})
 })
-router.post('/order', (req, res) => {
-	const order = new Order(req.body)
-	order.save()
+router.post('/order', (req, res, err) => {
+	Order
+		.create(req.body)
 		.then(() => res.redirect('/'))
-		.catch(() => res.send('bad'))
+		.catch(err)
 })
 router.get("/404", (req, res) => {
 	res.render('404', {page: '404'})
