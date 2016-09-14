@@ -20,6 +20,12 @@ block content
           option
           each size in sizes
             option(value-size.inches) #{size.name}: #{size.inches}"
+      .form-group
+          each top in toppings
+            div
+              label(for='toppings')
+                input(type='checkbox' value=top.name name='toppings')
+                |  #{top.name}
       .order-form__submit
         a.btn.btn-danger.btn-lg(href='/') Cancel
         input.btn.btn-success.btn-lg(type='submit' value='Submit')

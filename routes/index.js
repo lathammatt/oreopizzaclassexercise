@@ -6,6 +6,7 @@ const router = Router()
 const Contact = require('../models/contact')
 const Order = require('../models/orders')
 const Size = require('../models/size')
+const Topping = require('../models/toppings')
 
 // module.exports = function(app) {
 
@@ -25,8 +26,14 @@ router.post("/contact", (req, res, err) => {
 		.catch(err)
 })
 router.get('/order', (req, res) => {
-	Size.find().then(sizes =>
-	res.render('order', {page:'Order', sizes}))
+	Promise
+		.all([
+			Size.find().sort({inches: 1}),
+			Topping.find().sort({name: 1})
+	])
+		.then(([sizes, toppings]) =>
+	res.render('order', {page:'Order', sizes, toppings})
+		)
 })
 router.post('/order', (req, res, err) => {
 	Order
