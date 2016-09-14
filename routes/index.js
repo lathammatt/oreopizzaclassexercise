@@ -3,6 +3,8 @@
 const {Router} = require('express')
 const router = Router()
 
+const {db} = require('../database')
+
 // module.exports = function(app) {
 
 	router.get("/", (req, res) => {
@@ -15,12 +17,15 @@ const router = Router()
 		res.render('contact', {page: 'Contact'})
 	})
 	router.post("/contact", (req, res) => {
-		console.log(req.body);
-		res.redirect('/')
+		db().collection('contact')
+			.insertOne(req.body)
+			.then(() => res.redirect('/'))
+			.catch(() => res.send('bad'))
 	})
 	router.get("/404", (req, res) => {
 		res.render('404', {page: '404'})
 	})
-// }
+
+
 
 module.exports = router

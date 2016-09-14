@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const {cyan, red} = require('chalk')
 
 const routes = require('./routes/') // same as ./routes/index.js
+const {connect} = require('./database')
 
 const app = express() //new express
 
@@ -39,7 +40,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 // routes
 app.use(routes)
 
-// app.use(routes)
 
 
 // app.get("/", (req, res) => {
@@ -78,7 +78,11 @@ app.use((err, {method, url, headers: {'user-agent': agent}}, res, next) => {
 
 
 // listen to requests on the provided port and log when available
-app.listen(port, () => {
+connect()
+	.then(() => {
+	app.listen(port, () => {
 	console.log(`listening on ${port}`);
 })
+})
+.catch(console.error)
 
