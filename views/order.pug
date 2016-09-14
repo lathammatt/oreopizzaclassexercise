@@ -1,0 +1,27 @@
+extends partials/layout.pug
+
+block content
+  .heading
+    h1 Contact Us
+  .contact-form
+    form(method="POST")
+      .form-group
+        label(for='name') Name
+        input.form-control#name(type='text' name='name' placeholder='John Doe')
+      .form-group
+        label(for='email') Email Address
+        input.form-control#email(type='email' name='email' placeholder='you@example.com')
+      .form-group
+        label(for='phone') Phone Number
+        input.form-control#phone(type='tel' name='phone' placeholder='234-567-8901')
+      .form-group
+        label(for='size') Size
+        select.form-control#size(name='size')
+          option
+          option(value='small') Small 10"
+          option(value='medium') Medium 12"
+          option(value='large') Large 14"
+          option(value='megadoublestuffed') MegaDoubleStuffed 18"
+      .order-form__submit
+        a.btn.btn-danger.btn-lg(href='/') Cancel
+        input.btn.btn-success.btn-lg(type='submit' value='Submit')
