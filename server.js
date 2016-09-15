@@ -22,6 +22,9 @@ if(process.env.NODE_ENV !== 'production'){
 	app.locals.pretty = true
 }
 app.locals.company = "Oreo Pizza"
+app.locals.errors = {} // errors & body added to avoid guard statements
+app.locals.body = {} // i.e. value=(body && body.name) vs. value=body.name
+
 
 // middleware
 app.use(({method, url, headers: {'user-agent': agent}}, res, next) => {
