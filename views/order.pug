@@ -1,32 +1,45 @@
 extends partials/layout.pug
 
 block content
+  if errors
+    each err in errors
+      h1 = err.message
   .heading
-    h1 Contact Us
+    h1 Order
   .contact-form
     form(method="POST")
-      .form-group
+      .form-group(class={'has-error': errors.name})
         label(for='name') Name
-        input.form-control#name(type='text' name='name' placeholder='John Doe' required)
-      .form-group
+        input.form-control#name(type='text' name='name' placeholder='John Doe' value=body.name required)
+        if errors.name
+          span.help-block= errors.name.message
+      .form-group(class={'has-error': errors.email})
         label(for='email') Email Address
-        input.form-control#email(type='email' name='email' placeholder='you@example.com' required)
-      .form-group
+        input.form-control#email(type='email' name='email' placeholder='you@example.com' value=body.email required)
+        if errors.email
+          span.help-block= errors.email.message
+      .form-group(class={'has-error': errors.phone})
         label(for='phone') Phone Number
-        input.form-control#phone(type='tel' name='phone' placeholder='234-567-8901' required)
-      .form-group
+        input.form-control#phone(type='tel' name='phone' placeholder='234-567-8901' value=body.phone required)
+        if errors.phone
+          span.help-block= errors.phone.message
+      .form-group(class={'has-error': errors.size})
         label(for='size') Size
         select.form-control#size(name='size')
           option
           each size in sizes
             option(value-size.inches) #{size.name}: #{size.inches}"
-      .form-group
+          if errors.size
+            span.help-block= errors.size.message
+      .form-group(class={'has-error': errors.toppings})
         label Toppings
           each top in toppings
             div
               label(for='toppings')
                 input(type='checkbox' value=top.name name='toppings')
                 |  #{top.name}
+          if errors.toppings
+            span.help-block= errors.toppings.message
       .order-form__submit
         a.btn.btn-danger.btn-lg(href='/') Cancel
         input.btn.btn-success.btn-lg(type='submit' value='Submit')

@@ -35,7 +35,7 @@ router.get('/order', (req, res) => {
 	res.render('order', {page:'Order', sizes, toppings})
 		)
 })
-router.post('/order', ({ body }, res, err) =>
+router.post('/order', ({body}, res, err) =>
   Order
     .create(body)
     .then(() => res.redirect('/'))
