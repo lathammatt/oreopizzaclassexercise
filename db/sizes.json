@@ -1,0 +1,15 @@
+[
+  {
+    "name" : "Small",
+    "inches" : 10
+    },{
+      "name" : "Medium",
+      "inches" : 12
+    },{
+      "name" : "Large",
+      "inches" : 14
+    },{
+      "name" : "MegaDoubleStuffed",
+      "inches" : 18
+    }
+]
