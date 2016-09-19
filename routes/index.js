@@ -10,6 +10,29 @@ const Topping = require('../models/toppings')
 
 // module.exports = function(app) {
 
+router.get("/login", (req, res) => {
+	res.render('login')
+})
+
+router.post('/login', (res, req) => {
+  if (req.body.password === 'password'){
+    res.redirect('/')
+  } else (
+    res.render('login', {errors: ['Email and Password combination is Incorrect']})
+  )
+})
+router.get("/register", (req, res) => {
+	res.render('register')
+})
+router.post('/register', (res, req) => {
+  if (req.body.password === req.body.confirmation){
+    res.redirect('/')
+  } else (
+    res.render('register', {errors: ['Passwords do not match']})
+  )
+})
+
+
 router.get("/", (req, res) => {
 	res.render('index')
 })

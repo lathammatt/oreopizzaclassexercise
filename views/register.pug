@@ -1,0 +1,19 @@
+block content
+  .heading
+    h1 Login
+    if error
+      h2 = error
+  .contact-form
+    form(method="POST")
+      .form-group
+        label(for='email') Email Address
+        input.form-control#email(type='text' name='email' placeholder='')
+      .form-group
+        label(for='password') Password
+        input.form-control#password(type='password' name='password' placeholder='*****************')
+      .form-group
+        label(for='confirmation') Password Confirmation
+        input.form-control#password(type='password' name='confirmation' placeholder='*****************')
+      .contact-form__submit
+        a.btn.btn-danger.btn-lg(href='/') Cancel
+        input.btn.btn-success.btn-lg(type='submit' value='Register') Register
