@@ -1,8 +1,10 @@
+extends partials/layout.pug
+
 block content
   .heading
-    h1 Login
+    h1 Register
     if error
-      h2 = error
+      h2= error
   .contact-form
     form(method="POST")
       .form-group
@@ -13,7 +15,7 @@ block content
         input.form-control#password(type='password' name='password' placeholder='*****************')
       .form-group
         label(for='confirmation') Password Confirmation
-        input.form-control#password(type='password' name='confirmation' placeholder='*****************')
+        input.form-control#confirmation(type='password' name='confirmation' placeholder='*****************')
       .contact-form__submit
         a.btn.btn-danger.btn-lg(href='/') Cancel
-        input.btn.btn-success.btn-lg(type='submit' value='Register') Register
+        input.btn.btn-success.btn-lg(type='submit' value='Register')

@@ -7,31 +7,45 @@ const Contact = require('../models/contact')
 const Order = require('../models/orders')
 const Size = require('../models/size')
 const Topping = require('../models/toppings')
+const User = require('../models/user')
 
-// module.exports = function(app) {
 
 router.get("/login", (req, res) => {
 	res.render('login')
 })
 
-router.post('/login', (res, req) => {
-  if (req.body.password === 'password'){
-    res.redirect('/')
-  } else (
-    res.render('login', {errors: ['Email and Password combination is Incorrect']})
-  )
+router.post('/login', ({ body: { email, password } }, res, err) => {
+  User.findOne({ email })
+    .then(user => {
+      if (user && password === user.password) {
+        res.redirect('/')
+      } else if (user) {
+        res.render('login', { msg: 'Password does not match' })
+      } else {
+        res.render('login', { msg: 'Email does not exist in our system' })
+      }
+    })
+    .catch(err)
 })
 router.get("/register", (req, res) => {
 	res.render('register')
 })
-router.post('/register', (res, req) => {
-  if (req.body.password === req.body.confirmation){
-    res.redirect('/')
-  } else (
-    res.render('register', {errors: ['Passwords do not match']})
-  )
+router.post('/register', ({ body: { email, password, confirmation } }, res, err) => {
+  if (password === confirmation) {
+    User.findOne({ email })
+      .then(user => {
+        if (user) {
+          res.render('register', { msg: 'Email is already registered' })
+        } else {
+          return User.create({ email, password })
+        }
+      })
+      .then(() => res.redirect('/login'), { msg: 'User created' })
+      .catch(err)
+  } else {
+    res.render('register', { msg: 'Password & password confirmation do not match' })
+  }
 })
-
 
 router.get("/", (req, res) => {
 	res.render('index')
