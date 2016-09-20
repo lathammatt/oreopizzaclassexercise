@@ -3,6 +3,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const {cyan, red} = require('chalk')
+const session = require('express-session')
+var RedisStore = require('connect-redis')(session); //requires and then execute
+
 
 const routes = require('./routes/') // same as ./routes/index.js
 const {connect} = require('./db/database')
@@ -24,9 +27,20 @@ if(process.env.NODE_ENV !== 'production'){
 app.locals.company = "Oreo Pizza"
 app.locals.errors = {} // errors & body added to avoid guard statements
 app.locals.body = {} // i.e. value=(body && body.name) vs. value=body.name
-
+// app.locals.user = {email: 'a@b.com'}
 
 // middleware
+
+app.use(session({
+	store: new RedisStore(),
+	secret: "oreopizzaserioussecretkey"
+})) //salt for the hash, session object gets saved to database
+
+app.use((req, res, next) => {
+	app.locals.email = req.session.email
+	next()
+})
+
 app.use(({method, url, headers: {'user-agent': agent}}, res, next) => {
 	const timestamp = new Date()
 	console.log(`[${timestamp}] "${cyan(`${method} ${url}`)}" "${agent}"`);

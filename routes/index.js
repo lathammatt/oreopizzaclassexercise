@@ -16,7 +16,7 @@ router.get("/login", (req, res) => {
 	res.render('login')
 })
 
-router.post('/login', ({ body: { email, password } }, res, err) => {
+router.post('/login', ({ session, body: { email, password } }, res, err) => {
   User.findOne({ email })
     .then(user => {
       if (user) {
@@ -27,14 +27,15 @@ router.post('/login', ({ body: { email, password } }, res, err) => {
             } else {
               resolve(matches)
             }
-          }
-        }
+          })
+        })
       } else {
         res.render('login', { msg: 'Email does not exist in our system' })
       }
     })
     .then((matches) => {
       if (matches) {
+        session.email = email
         res.redirect('/')
       } else {
         res.render('login', { msg: 'Password does not match' })
