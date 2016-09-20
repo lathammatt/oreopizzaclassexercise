@@ -11,7 +11,6 @@ const Size = require('../models/size')
 const Topping = require('../models/toppings')
 const User = require('../models/user')
 
-
 router.get("/login", (req, res) => {
 	res.render('login')
 })
@@ -47,6 +46,7 @@ router.post('/login', ({ session, body: { email, password } }, res, err) => {
 router.get("/register", (req, res) => {
 	res.render('register')
 })
+
 router.post('/register', ({ body: { email, password, confirmation } }, res, err) => {
   if (password === confirmation) {
     User.findOne({ email })
