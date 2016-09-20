@@ -88,6 +88,16 @@ router.post("/contact", (req, res, err) => {
 		.then(() => res.redirect('/'))
 		.catch(err)
 })
+
+// guard middleware
+router.use((req, res, next) => {
+  if (req.session.email){
+    next()
+  } else {
+    res.redirect('/login')
+  }
+})
+
 router.get('/order', (req, res) => {
 	Promise
 		.all([
@@ -123,6 +133,21 @@ router.post('/order', ({body}, res, err) =>
 )
 router.get("/404", (req, res) => {
 	res.render('404', {page: '404'})
+})
+
+router.get('/logout', (req, res) => {
+  if (req.session.email){
+    res.render('logout', {page: 'logout'})
+  } else {
+    res.redirect('/login')
+  }
+})
+
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) throw err
+    res.redirect('/login')
+  })
 })
 
 

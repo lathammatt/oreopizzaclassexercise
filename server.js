@@ -59,23 +59,6 @@ app.use(routes)
 
 
 
-// app.get("/", (req, res) => {
-// 	res.render('index')
-// })
-// app.get("/about", (req, res) => {
-// 	res.render('about', {page: 'About'})
-// })
-// app.get("/contact", (req, res) => {
-// 	res.render('contact', {page: 'Contact'})
-// })
-// app.post("/contact", (req, res) => {
-// 	console.log(req.body);
-// 	res.redirect('/')
-// })
-// app.get("/404", (req, res) => {
-// 	res.render('404', {page: '404'})
-// })
-
 // 404 custom page and pass to error-handling middleware
 app.use((req, res, next) => {
 	// const err = Error('Not Found')
