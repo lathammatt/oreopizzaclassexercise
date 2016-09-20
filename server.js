@@ -32,7 +32,9 @@ app.locals.body = {} // i.e. value=(body && body.name) vs. value=body.name
 // middleware
 
 app.use(session({
-	store: new RedisStore(),
+	store: new RedisStore({
+		// url: process.env.REDIS_URL || 'redis://localhost:6379' if setup heroku with redis addon
+	}),
 	secret: "oreopizzaserioussecretkey"
 })) //salt for the hash, session object gets saved to database
 
