@@ -89,6 +89,13 @@ router.post("/contact", (req, res, err) => {
 		.catch(err)
 })
 
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) throw err
+    res.redirect('/login')
+  })
+})
+
 // guard middleware
 router.use((req, res, next) => {
   if (req.session.email){
@@ -136,19 +143,10 @@ router.get("/404", (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-  if (req.session.email){
-    res.render('logout', {page: 'logout'})
-  } else {
-    res.redirect('/login')
+    res.redirect('/logout', {page: 'Logout'})
   }
-})
+)
 
-router.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) throw err
-    res.redirect('/login')
-  })
-})
 
 
 
