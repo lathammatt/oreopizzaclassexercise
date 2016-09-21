@@ -63,9 +63,6 @@ app.use(routes)
 
 // 404 custom page and pass to error-handling middleware
 app.use((req, res, next) => {
-	// const err = Error('Not Found')
-	// err.status = 404
-	// next(err)
 	res.render('404')
 })
 
