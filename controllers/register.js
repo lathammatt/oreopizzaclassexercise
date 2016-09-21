@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 module.exports.new = (req, res) => {
 	res.render('register')
-})
+}
 
 module.exports.create = ({ body: { email, password, confirmation } }, res, err) => {
   if (password === confirmation) {
@@ -33,4 +33,4 @@ module.exports.create = ({ body: { email, password, confirmation } }, res, err) 
   } else {
     res.render('register', { msg: 'Password & password confirmation do not match' })
   }
-})
+}
