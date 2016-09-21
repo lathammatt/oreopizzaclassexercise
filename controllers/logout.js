@@ -1,7 +1,6 @@
 'use strict';
 
 
-
 module.exports.index = (req, res) => {
     res.redirect('/logout', {page: 'Logout'})
   }
