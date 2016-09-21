@@ -4,12 +4,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const {cyan, red} = require('chalk')
 const session = require('express-session')
+const passport = require('passport')
 var RedisStore = require('connect-redis')(session); //requires and then execute
 
 
 const routes = require('./routes/') // same as ./routes/index.js
 const {connect} = require('./db/database')
 
+require('./passport-config')
 const app = express() //new express
 
 
@@ -30,6 +32,8 @@ app.locals.body = {} // i.e. value=(body && body.name) vs. value=body.name
 // app.locals.user = {email: 'a@b.com'}
 
 // middleware
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(session({
 	store: new RedisStore({
@@ -40,7 +44,7 @@ app.use(session({
 })) //salt for the hash, session object gets saved to database
 
 app.use((req, res, next) => {
-	app.locals.email = req.session.email
+	app.locals.email = req.user && req.user.email
 	next()
 })
 

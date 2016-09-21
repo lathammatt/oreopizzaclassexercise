@@ -22,7 +22,7 @@ router.use(require("./root"))
 
 // guard middleware
 router.use((req, res, next) => {
-  if (req.session.email){
+  if (req.user){
     next()
   } else {
     res.redirect('/login')
