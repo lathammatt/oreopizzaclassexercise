@@ -2,7 +2,6 @@
 
 const passport = require('passport')
 const {Strategy} = require('passport-local')
-const bcrypt = require('bcrypt')
 const User = require('./models/user')
 
 passport.serializeUser((user, cb) => {
@@ -21,14 +20,10 @@ passport.use(new Strategy({
     User.findOne({ email })
       .then(user => {
         if (user) {
-          return new Promise((resolve, reject) => {
-            bcrypt.compare(password, user.password, (err, matches) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve(matches && user)
-              }
-            })
+          user.compare(password, (err, matches)=> {
+            if (matches) {
+              cb(null, null)
+            }
           })
         } else {
           cb(null, null, {msg: "Email does not exist in our system"}) //internal error if there is one, user, flash message
