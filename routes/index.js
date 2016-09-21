@@ -12,14 +12,16 @@ const order = require(".'order")
 const register = require(".'register")
 const root = require(".'root")
 
+// public routes
 router.use(about)
 router.use(contact)
 router.use(login)
-router.use(logout)
-router.use(order)
 router.use(register)
 router.use(root)
 
+// private routes
+router.use(logout)
+router.use(order)
 
 
 // guard middleware

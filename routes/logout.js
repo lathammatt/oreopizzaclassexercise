@@ -4,15 +4,8 @@ const {Router} = require('express')
 
 const router = Router()
 
+const logout = require('../controllers/logout')
 
-router.get('/logout', (req, res) => {
-    res.redirect('/logout', {page: 'Logout'})
-  }
-)
+router.get('/logout', logout.index)
 
-router.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) throw err
-    res.redirect('/login')
-  })
-})
+router.post('/logout', logout.destroy)

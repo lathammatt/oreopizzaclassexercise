@@ -4,9 +4,9 @@ const {Router} = require('express')
 
 const router = Router()
 
+const {index} = require('../controllers/about')
 
-router.get("/about", (req, res) => {
-	res.render('about', {page: 'About'})
-})
+
+router.get("/about", index)
 
 module.exports = router
