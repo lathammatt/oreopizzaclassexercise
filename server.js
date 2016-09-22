@@ -2,16 +2,15 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const {cyan, red} = require('chalk')
 const session = require('express-session')
 const passport = require('passport')
+const {cyan, red} = require('chalk')
 var RedisStore = require('connect-redis')(session); //requires and then execute
 
 
 const routes = require('./routes/') // same as ./routes/index.js
 const {connect} = require('./db/database')
 
-require('./passport-config')
 const app = express() //new express
 
 
@@ -31,10 +30,8 @@ app.locals.errors = {} // errors & body added to avoid guard statements
 app.locals.body = {} // i.e. value=(body && body.name) vs. value=body.name
 // app.locals.user = {email: 'a@b.com'}
 
-// middleware
-app.use(passport.initialize())
-app.use(passport.session())
 
+// middleware
 app.use(session({
 	store: new RedisStore({
 		url: process.env.REDIS_URL || 'redis://localhost:6379'
@@ -42,6 +39,10 @@ app.use(session({
 	}),
 	secret: "oreopizzaserioussecretkey"
 })) //salt for the hash, session object gets saved to database
+
+require('./passport-config')
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use((req, res, next) => {
 	app.locals.email = req.user && req.user.email

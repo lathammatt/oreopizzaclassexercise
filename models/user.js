@@ -1,8 +1,9 @@
 'use strict';
 
 const mongoose = require('mongoose')
-const {compare} = require('bcrypt')
+const {compare, hash} = require('bcrypt')
 
+const BCRYPT_DIFFICULTY = 15
 const HTML5_EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 const userSchema = new mongoose.Schema({
@@ -19,24 +20,38 @@ const userSchema = new mongoose.Schema({
   }
 })
 
+//lifecycle methods
 userSchema.pre('save', cb => {
   const user = this
-  bcrypt.hash(user.password, 15, (err, hash) => {
+  hash(user.password, BCRYPT_DIFFICULTY, (err, hashedpass) => {
     if (err) {
       return cb(err)
     }
-    user.password = hash
+    user.password = hashedpass
     cb()
   })
 })
 
+//class/static/model methods
 userSchema.statics.findOneByEmail = (email, cb) => {
-  return this.findOne({email}, cb)
+  const collection = this
+  return collection.findOne({email}, cb)
 }
 
-userSchema.statics.comparePassword = function(password, cb) {
+// instance methods
+userSchema.methods.comparePassword = function (password, cb) {
   const user = this
-  return compare(password, this.password, cb)
+
+  // Support callback and `Promise` pattern. If comparePassword is called in Promise, it skips this part and goes to the Promise section below. If callback function (more common) it will run this code
+  if (typeof cb === 'function') {
+    return compare(password, user.password, cb)
+  }
+
+  return new Promise((resolve, reject) =>
+    compare(password, user.password, (err, matches) =>
+      err ? reject(err) : resolve(matches)
+    )
+  )
 }
 
 module.exports = mongoose.model('User', userSchema)
