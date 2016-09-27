@@ -14,10 +14,10 @@ module.exports.create = ({ body: { email, password, confirmation } }, res, err) 
     User.findOneByEmail(email)
       .then(user => {
         if (user) {
-          res.render('register', { msg: 'Email is already registered' })
+          return res.render('register', { msg: 'Email is already registered' })
         }
+      return User.create({email, password})
       })
-      return (user) => User.create({email, password})
       .then(() => res.redirect('/login'))
       .catch(err)
   } else {

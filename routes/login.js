@@ -1,18 +1,14 @@
 'use strict';
 
 const {Router} = require('express')
-const passport = require('passport')
+// const passport = require('passport')
 
 const router = Router()
 
-const login = require('../controllers/session')
+const session = require('../controllers/session')
 
 
-router.get("/login", login.new)
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-}))
+router.get('/login', session.new)
+router.post('/login', session.create)
 
 module.exports = router

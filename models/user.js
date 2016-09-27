@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
 })
 
 //lifecycle methods
-userSchema.pre('save', cb => {
+userSchema.pre('save', function(cb) {
   const user = this
   hash(user.password, BCRYPT_DIFFICULTY, (err, hashedpass) => {
     if (err) {
@@ -33,7 +33,7 @@ userSchema.pre('save', cb => {
 })
 
 //class/static/model methods
-userSchema.statics.findOneByEmail = (email, cb) => {
+userSchema.statics.findOneByEmail = function (email, cb) {
   const collection = this
   return collection.findOne({email}, cb)
 }

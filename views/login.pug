@@ -4,8 +4,8 @@ block content
   .heading
     h1
     h1 Login
-    if error
-      h2= error
+    if msg
+      h2= msg
   .contact-form
     form(method="POST")
       .form-group

@@ -4,11 +4,11 @@ const {Router} = require('express')
 
 const router = Router()
 
-const register = require('../controllers/register')
+const user = require('../controllers/user')
 
 
-router.get("/register", register.new)
+router.get('/register', user.new)
 
-router.post('/register', register.create)
+router.post('/register', user.create)
 
 module.exports = router
